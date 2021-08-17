@@ -6,20 +6,41 @@ editor_options:
 ---
 
 ```{r}
+# renv::init()
+# renv::install("tidyverse")
 library(tidyverse)
 ```
 
 
 ```{bash, engine.opts = "-l"}
 conda activate fastx
-fasta_formatter -i mTH_short_isoform.txt -w 0 > mTH_short_isoform_formatted.fa
+fasta_formatter -i th_exons.fa -w 0 > mTH_short_isoform_formatted.fa
 conda deactivate
 
 ```
 
+
+# Mouse Th
+
+Remove the two 5' most exons, including 5' UTR, to avoid selecting for a specific Th isoform
 ```{r}
 sequence <- read_lines("./mTH_short_isoform_formatted.fa")
 
+block_fasta_start <- str_which(sequence, ">mm")
+block_fasta_sequence <- block_fasta_start + 1
+
+for (i in block_fasta_sequence) {
+  sequence[i] <- paste0(sequence[i], "N")
+}
+
+block_retain <- block_fasta_sequence[3:length(block_fasta_sequence)]
+
+x <- c()
+for (i in block_retain){
+  x <- c(x, sequence[i])
+}
+
+write_lines(x, "mTH_query_sequence.fa", sep = "")
 
 
 ```
