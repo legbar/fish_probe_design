@@ -1,0 +1,36 @@
+---
+title: "Jeff"
+output: html_document
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r}
+library(tidyverse)
+```
+
+
+```{bash, engine.opts = "-l"}
+conda activate fastx
+fasta_formatter -i mTH_short_isoform.txt -w 0 > mTH_short_isoform_formatted.fa
+conda deactivate
+
+```
+
+```{r}
+sequence <- read_lines("./mTH_short_isoform_formatted.fa")
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
