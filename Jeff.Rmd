@@ -49,7 +49,16 @@ write_lines(x, "mTH_query_sequence.fa", sep = "")
 
 
 
+```{bash, engine.opts = "-l"}
+conda activate entrez
 
+echo $PATH
+
+esearch -db sra -query SRR9610563
+
+conda deactivate
+
+```
 
 
 
